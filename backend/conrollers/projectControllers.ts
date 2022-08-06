@@ -11,7 +11,11 @@ const getProjects = (req: Request, res: Response) => {
 //@route POST /api/projects
 //@access Private
 const createProject = (req: Request, res: Response) => {
-    res.json({ message: 'Create a Project' });
+    if (!req.body.title) {
+        res.status(400)
+        throw new Error('Title is required');
+    }
+    res.status(201).json({ message: 'Create a Project' });
 };
 
 //@desc Get a project by id
