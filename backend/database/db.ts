@@ -1,9 +1,12 @@
 import mongoose from 'mongoose';
 import { MONGO_URI } from '../utils/config';
+import HttpException from '../utils/httpException';
 
 export const connectDB = async () => {
     if (!MONGO_URI) {
-        console.log('MONGO_URL is not defined in the env file'.red.underline.bold);
+        console.log(
+            'MONGO_URL is not defined in the env file'.red.underline.bold
+        );
         process.exit(1);
     }
     try {
@@ -14,3 +17,10 @@ export const connectDB = async () => {
         process.exit(1);
     }
 };
+
+export function checkIsValidObjectId(id: string) {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        throw new HttpException(`${id} is not a valid id`, 400 );
+    }
+    return true;
+}
