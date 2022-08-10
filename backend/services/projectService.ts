@@ -1,4 +1,3 @@
-import { body, validationResult } from 'express-validator';
 import { sanitizeProject } from '../sanitizers/projectSanitizer';
 import ProjectModel from '../models/projectModel';
 import { IProjectSchema } from '../schemas/projectSchema';
