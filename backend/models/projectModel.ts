@@ -1,6 +1,17 @@
-import { model } from 'mongoose';
-import projectSchema, { IProjectSchema } from './schemas/projectSchema';
+const mongoose = require('mongoose');
 
-const ProjectModel = model<IProjectSchema>('Project', projectSchema);
+const projectSchema = mongoose.Schema(
+    {
+        title: {
+            type: String,
+            required: true,
+            unique: true,
+        },
+    },
+    {
+        timestamps: true,
+    }
+);
 
-export default ProjectModel;
+module.exports =
+    mongoose.models.Project || mongoose.model('Project', projectSchema);
