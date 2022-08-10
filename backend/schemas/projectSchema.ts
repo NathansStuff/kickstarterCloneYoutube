@@ -1,5 +1,5 @@
 import { Schema } from 'mongoose';
-import { ProjectType } from '../../types/projectTypes';
+import { ProjectType } from '../types/projectTypes';
 
 export interface IProjectSchema extends ProjectType {
     _id: string;

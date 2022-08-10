@@ -1,5 +1,5 @@
 import ProjectModel from '../models/projectModel';
-import { IProjectSchema } from '../models/schemas/projectSchema';
+import { IProjectSchema } from '../schemas/projectSchema';
 import { ProjectType } from '../types/projectTypes';
 import HttpException from '../utils/httpException';
 
