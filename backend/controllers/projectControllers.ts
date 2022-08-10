@@ -9,7 +9,6 @@ import {
     updateProject,
     deleteProject,
 } from '../services/projectService';
-import { ProjectType } from '../types/projectTypes';
 
 const Project = require('../models/projectModel');
 
