@@ -1,4 +1,3 @@
-import { body, validationResult } from 'express-validator';
 import ProjectModel from '../models/projectModel';
 import { IProjectSchema } from '../schemas/projectSchema';
 import { ProjectType } from '../types/projectTypes';
@@ -8,9 +7,7 @@ export async function createProject(
     project: ProjectType
 ): Promise<ProjectType> {
     try {
-        const sanitizedProject = sanitizeProject(project);
-
-        const createdProject = await ProjectModel.create(sanitizedProject);
+        const createdProject = await ProjectModel.create(project);
         if (!createdProject) {
             throw new Error('Project not created');
         }
@@ -42,10 +39,9 @@ export async function updateProject(
     projectId: string,
     project: ProjectType
 ): Promise<ProjectType> {
-    const sanitizedProject = sanitizeProject(project);
     const updatedProject = await ProjectModel.findByIdAndUpdate(
         projectId,
-        sanitizedProject,
+        project,
         { new: true }
     );
     if (!updatedProject) {
@@ -56,29 +52,4 @@ export async function updateProject(
 
 export async function deleteProject(projectId: string): Promise<void> {
     await ProjectModel.findByIdAndDelete(projectId);
-}
-
-function sanitizeProject(project: ProjectType): ProjectType {
-    let sanitizedProject = <ProjectType>{};
-
-    // Title validation
-    let title = project.title;
-    // Types
-    if (title === undefined) {
-        throw new HttpException('Title is required', 400);
-    }
-    if (typeof title !== 'string') {
-        throw new HttpException('Title must be a string', 400);
-    }
-    // Attribues
-    title = title.trim();
-    if (title.length < 3) {
-        throw new HttpException('Title must be at least 3 characters', 400);
-    }
-    if (title.length > 50) {
-        throw new HttpException('Title must be less than 50 characters', 400);
-    }
-    sanitizedProject.title = title;
-
-    return sanitizedProject;
 }
